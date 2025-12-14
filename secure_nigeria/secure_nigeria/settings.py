@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'NaijaWatch',
-    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    'accounts',
     
 ]
 
@@ -126,7 +126,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # secure_naija/settings.py
 
-AUTH_USER_MODEL = 'NaijaWatch.MyUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
