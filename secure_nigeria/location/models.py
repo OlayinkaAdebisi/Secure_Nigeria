@@ -45,13 +45,21 @@ class Stations(models.Model):
     ]
     STATUS=[
         ('ACTIVE', 'Active'),
-        ('INACTIVE', 'Nonactive'),
+        ('INACTIVE', 'Inactive'),
     ]
-    location=models.ForeignKey(Location,on_delete=models.CASCADE)
-    name=models.CharField(max_length=30)
-    type=models.CharField(max_length=10,choices=STATION_TYPES)
-    status=models.CharField(max_length=10,choices=STATUS)
-    contact=models.CharField(max_length=15, unique=True)
-
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, db_column='latitude') 
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, db_column='longitude')
+    state = models.CharField(max_length=50, null=True, blank=True,db_column='state')
+    state_code = models.CharField(max_length=5, db_column='state_code', null=True, blank=True)
+    lga = models.CharField(max_length=20, null=True, blank=True,db_column='lga')
+    name=models.CharField(max_length=200, db_column='name')
+    type=models.CharField(max_length=10,choices=STATION_TYPES, null=True, blank=True)
+    status=models.CharField(max_length=10,choices=STATUS, null=True, blank=True)
+    contact=models.CharField(max_length=100, null=True, blank=True)
+    timestamp=models.CharField(max_length=255,db_column='timestamp')
+    address=models.TextField(null=True, blank=True, db_column='address')
     def __str__(self):
-        return self.location
+        return self.name
+    
+    class Meta:
+        db_table = 'stations'
