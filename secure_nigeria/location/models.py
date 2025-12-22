@@ -34,6 +34,7 @@ class Location(models.Model):
         choices=REPORT_SOURCE_CHOICES, 
         default='EYEWITNESS'
     )
+    description = models.TextField(null=True, blank=True)
     def __str__(self):
         return self.address
 class Stations(models.Model):
