@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .models import Location,Stations
+from .models import Location,Stations,High_Risk_Area,Feed,Comment
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions
-from .serializers import LocationSerializer,StationSerializer
+from .serializers import LocationSerializer,StationSerializer,RiskSerializer,FeedSerializer,CommentSerializer
 import math
 # Create your views here.
 
@@ -25,6 +25,7 @@ def distance_approx(lat1,lon1,lat2,lon2):
 
     d = float(R * c)
     return d
+
 
 
 class LocationViewSet(viewsets.ModelViewSet):
@@ -77,5 +78,95 @@ class StationViewSet(viewsets.ModelViewSet):
     serializer_class=StationSerializer
     permission_classes=[permissions.IsAuthenticatedOrReadOnly]
 
+class RiskViewSet(viewsets.ModelViewSet):
+    queryset=High_Risk_Area.objects.all()
+    serializer_class=RiskSerializer
+    permission_classes=[permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        # get the descriptions from location
+
+        risk_level = None
+        risk_type = None
+        for location in Location.objects.all():
+
+            if location.incident_types == "TERRORISM":
+                risk_level = 'HIGH'
+                risk_type = 'TERRORISM'
+            elif location.incident_types == "KIDNAPPING":
+                risk_level = 'HIGH'
+                risk_type = 'KIDNAPPING'
+            elif location.incident_types == "ROBBERY":
+                risk_level = 'MEDIUM'
+                risk_type = 'ROBBERY'
+            elif location.incident_types == "ACCIDENT":
+                risk_level = 'MEDIUM'
+                risk_type = 'ACCIDENT'
+            elif location.incident_types == "RIOT":
+                risk_level = 'LOW'
+                risk_type = 'RIOT'
+            else:
+                risk_level = 'MEDIUM'
+                risk_type = 'OTHER'
+
+            High_Risk_Area.objects.update_or_create(
+                location_id=location.id,
+                defaults={
+                    'user': request.user,
+                    'description': location.description,
+                    'risk_level': risk_level,
+                    'risk_types': risk_type,
+                }
+            )
+
+        return response
+            
+class FeedViewSet(viewsets.ModelViewSet):
+    queryset = Feed.objects.all().order_by('-created_at')
+    serializer_class=FeedSerializer
+    permission_classes=[permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def list(self, request, *args, **kwargs):
+
+        for risk in High_Risk_Area.objects.all():
+            Feed.objects.update_or_create(
+                risk_area=risk,
+                defaults={
+                'author': getattr(risk.location, 'reported_by', request.user),
+                'title':risk.description,
+                'location': risk.location,
+                'created_at':risk.location.created_at,
+                'risk_level': risk.risk_level,
+                'content': (
+                            f"{risk.description} at {risk.location.address}, "
+                            f"{risk.location.local_government}, {risk.location.state}. "
+                            f"Lat: {risk.location.longitude}, Long: {risk.location.latitude}. "
+                            f"{risk.location.detail or ''}"
+                        )
+                }
+            )
+
+        return super().list(request, *args, **kwargs)
+
+class CommentViewset(viewsets.ModelViewSet):
+    queryset=Comment.objects.all()
+    serializer_class=CommentSerializer
+    permission_classes=[permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        comment=serializer.save(user=self.request.user)
+        post=comment.post
+
+    """def create(self, request, *args, **kwargs):
+        response=super().create(request, *args, **kwargs)"""
 
 
+
+    
