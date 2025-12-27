@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'accounts',
-    
+    'location',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'secure_nigeria.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'secure_nigeria_db',
+        'USER': 'root',
+        'PASSWORD': 'Zadi1234', 
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -131,5 +135,10 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
