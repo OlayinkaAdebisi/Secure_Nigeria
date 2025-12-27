@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Location,Stations,High_Risk_Area,Feed,Comment
+from .models import Location,Stations,High_Risk_Area,Feed,Comment,Verify
 
 class LocationSerializer(serializers.ModelSerializer):
 
@@ -26,11 +26,15 @@ class RiskSerializer(serializers.ModelSerializer):
 class FeedSerializer(serializers.ModelSerializer):
     author=serializers.ReadOnlyField(source='author.username')
     location_id=serializers.ReadOnlyField(source='location.id')
+    verify_count=serializers.SerializerMethodField()
     class Meta:
         model=Feed
-        fields=['id','author', 'title', 'content', 'location_id', 'risk_level','created_at']
+        fields=['id','author', 'title', 'content', 'location_id', 'risk_level','created_at', 'verify_count']
 
         read_only_fields = ['author', 'created_at']
+    def get_verify_count(self,obj):
+        
+        return Verify.objects.filter(post=obj).count()
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.username')
@@ -40,3 +44,4 @@ class CommentSerializer(serializers.ModelSerializer):
         fields=['id','user','post', 'content', 'created_at']
 
         read_only_fields = ['user', 'created_at']
+
