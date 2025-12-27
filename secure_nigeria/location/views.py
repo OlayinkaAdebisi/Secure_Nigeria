@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .models import Location,Stations,High_Risk_Area,Feed,Comment
+from .models import Location,Stations,High_Risk_Area,Feed,Comment,Verify
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions,generics,status
 from .serializers import LocationSerializer,StationSerializer,RiskSerializer,FeedSerializer,CommentSerializer
 import math
 # Create your views here.
@@ -167,6 +167,41 @@ class CommentViewset(viewsets.ModelViewSet):
     """def create(self, request, *args, **kwargs):
         response=super().create(request, *args, **kwargs)"""
 
+class VerifyView(generics.GenericAPIView):
+    permission_classes=[permissions.IsAuthenticated]
 
+    def post(self, request, pk):
+        feed=generics.get_object_or_404(Feed,pk=pk)
+        user=request.user
+        verify,created=Verify.objects.get_or_create(user=user,post=feed)
+        if created==False:
+            return Response(
+                {"message": "You already verified this post!"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if user.username != feed.author:
+            pass
 
-    
+        return Response(
+            {"message": "You verified this post!"},
+            status=status.HTTP_201_CREATED
+        )
+class UnverifyView(generics.GenericAPIView):
+    permission_classes=[permissions.IsAuthenticated]
+
+    def post(self, request, pk):
+        feed=generics.get_object_or_404(Feed,pk=pk)
+        user=request.user
+        try:
+            verify=Verify.objects.get(user=user,post=feed)
+            verify.delete()
+
+            return Response(
+                {"message":"You Unverified this post"},
+                status=status.HTTP_200_OK
+            )
+        except Verify.DoesNotExist:
+            return Response(
+                {"message":"You haven't Verified this post"},
+                status=status.HTTP_404_NOT_FOUND
+            )
