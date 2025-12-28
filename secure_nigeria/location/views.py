@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from rest_framework import viewsets, permissions,generics,status
 from .serializers import LocationSerializer,StationSerializer,RiskSerializer,FeedSerializer,CommentSerializer
 import math
+from alert.models import Notification
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth import get_user_model
 # Create your views here.
 
 def distance_approx(lat1,lon1,lat2,lon2):
@@ -131,8 +134,15 @@ class FeedViewSet(viewsets.ModelViewSet):
     permission_classes=[permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
+        feed=serializer.save(author=self.request.user)
+        user= self.request.user
+        Notification.objects.create(
+                recipient=feed.author,
+                actor=user,
+                verb=f"{user.username} made a new post",
+                content_type=ContentType.objects.get_for_model(Feed),
+                object_id=feed.id
+            )
     def list(self, request, *args, **kwargs):
 
         for risk in High_Risk_Area.objects.all():
@@ -162,10 +172,15 @@ class CommentViewset(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         comment=serializer.save(user=self.request.user)
-        post=comment.post
-
-    """def create(self, request, *args, **kwargs):
-        response=super().create(request, *args, **kwargs)"""
+        feed=comment.post
+        user= self.request.user
+        Notification.objects.create(
+                recipient=feed.author,
+                actor=user,
+                verb='Commented on your post',
+                content_type=ContentType.objects.get_for_model(Feed),
+                object_id=feed.id
+            )
 
 class VerifyView(generics.GenericAPIView):
     permission_classes=[permissions.IsAuthenticated]
@@ -179,8 +194,13 @@ class VerifyView(generics.GenericAPIView):
                 {"message": "You already verified this post!"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        if user.username != feed.author:
-            pass
+        Notification.objects.create(
+                recipient=feed.author,
+                actor=user,
+                verb='verified your post',
+                content_type=ContentType.objects.get_for_model(Feed),
+                object_id=feed.id
+            )
 
         return Response(
             {"message": "You verified this post!"},
