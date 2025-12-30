@@ -36,3 +36,19 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("invalid")
         
         return {'user': user}
+    
+class ProfileSerializer(serializers.ModelSerializer):
+    followers = serializers.SerializerMethodField()
+    followings = serializers.SerializerMethodField()
+
+    class Meta:
+        model=CustomUser
+        fields=['id', 'username', 'first_name', 'last_name', 'date_of_birth', 'phone_number', 'followers', 'followings']
+        read_only_fields = ['username', 'followers', 'followings']
+
+    def get_followers(self,obj):
+        return obj.followers.count()
+    
+    def get_followings(self,obj):
+        return obj.following.count()
+    
