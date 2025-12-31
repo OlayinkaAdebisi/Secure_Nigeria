@@ -1,5 +1,3 @@
-# Secure_Nigeria
-ALX BE Capstone
 # Nigeria Security Awareness API 🇳🇬
 
 **"Security is everyone's business."**
@@ -38,7 +36,8 @@ I chose **Django** for its robustness and security features—essential for a pl
 
 1.  **Clone the repo:**
     ```bash
-    git clone https://github.com/OlayinkaAdebisi/Secure_Nigeria.git
+    git clone [https://github.com/OlayinkaAdebisi/Secure_Nigeria.git](https://github.com/OlayinkaAdebisi/Secure_Nigeria.git)
+    cd Secure_Nigeria
     ```
 
 2.  **Install dependencies:**
@@ -64,16 +63,14 @@ I chose **Django** for its robustness and security features—essential for a pl
 
 Here is exactly how to test the system in Postman.
 
-### 1️⃣ User Accounts (Authentication)
+### 🔐 1. User Accounts (Authentication)
 *Everything starts here. You need a token to do anything else.*
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | **POST** | `/secure_nigeria/signup/` | Create a new account |
-| **POST** | `/secure_nigeria/login/` | **Login (Get Token)** |
-| **POST** | `/secure_nigeria/profile/` | Get User profile |
+| **POST** | `/secure_nigeria/signin/` | **Login (Get Token)** |
 | **POST** | `/secure_nigeria/follow/<id>/` | Follow another user |
-| **POST** | `/secure_nigeria/unfollow/<id>/` | Unfollow another user |
 
 **📝 JSON Body for Sign Up:**
 ```json
@@ -85,21 +82,9 @@ Here is exactly how to test the system in Postman.
     "first_name": "Adebisi",
     "last_name": "Olayinka"
 }
-###
-
-📍 2. Location (Step 1: Define the Place)
-*The Location endpoint serves two main purposes: Reporting where an incident happened, and listing emergency stations.*
-
-**Note:** You only need to use **POST** (to report) or **GET** (to find help). We limit editing locations to preserve the integrity of security reports.
-
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| **POST** | `/location/location/` | **Report Incident Location** (Returns ID) |
-| **GET** | `/location/station/` | **List Police Stations** (Read Only) |
-
-**📝 JSON Body (Create Location):**
-```json
-{
+```
+📍 2. Location (Step 1: Define the Place)Before you can post an alert, you must define WHERE it happened. This returns an ID you need for the next step.MethodEndpointDescriptionPOST/location/location/Report Incident Location (Returns ID)GET/location/station/List Police Stations (Read Only)📝 JSON Body (Create Location):
+```JSON{
     "latitude": "6.524400",
     "longitude": "3.379200",
     "state": "Lagos",
@@ -108,3 +93,13 @@ Here is exactly how to test the system in Postman.
     "report_source": "EYEWITNESS",
     "incident_types": "ROBBERY"
 }
+```
+(⚠️ Important: Copy the id from the response! You need it for the Feed.)📢 3. Feed (Step 2: Create the Alert)Now that you have a Location ID, you can post the actual news to the Feed.MethodEndpointDescriptionPOST/location/feed/Create the security alertPOST/location/feed/verify/<id>/Verify a post is truePOST/location/feed/unverify/<id>/Dispute a report📝 JSON Body for Feed:
+```JSON{
+    "title": "Robbery Alert",
+    "content": "Avoid the underbridge, heavy traffic caused by incident.",
+    "location": 1,
+    "risk_level": "High"
+}
+```
+(Replace 1 with the ID you got from the Location step).🔔 4. NotificationsThese are generated automatically when someone follows you.MethodEndpointDescriptionGET/secure_nigeria/notification/View your alerts (e.g., "User A followed you")👤 About the AuthorADEBISI OlayinkaI'm a Django developer passionate about solving real-world problems with code. This project is my attempt to use technology to improve safety in Nigeria.
