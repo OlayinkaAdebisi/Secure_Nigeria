@@ -27,9 +27,12 @@ SECRET_KEY = 'django-insecure-nz7g*&#f%)n%#$dl#_c6x37dkd!(um)%76u(eb8vlu(amut*9_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
-
-
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    # Add your specific Render domain here
+    ALLOWED_HOSTS = ['secure-nigeria.onrender.com', 'localhost', '127.0.0.1']
+    
 # Application definition
 
 INSTALLED_APPS = [
