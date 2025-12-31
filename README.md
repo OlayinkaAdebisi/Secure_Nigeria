@@ -85,3 +85,24 @@ Here is exactly how to test the system in Postman.
     "first_name": "Adebisi",
     "last_name": "Olayinka"
 }
+### 📍 2. Location (Step 1: Define the Place)
+*The Location endpoint serves two main purposes: Reporting where an incident happened, and listing emergency stations.*
+
+**Note:** You only need to use **POST** (to report) or **GET** (to find help). We limit editing locations to preserve the integrity of security reports.
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| **POST** | `/location/location/` | **Report Incident Location** (Returns ID) |
+| **GET** | `/location/station/` | **List Police Stations** (Read Only) |
+
+**📝 JSON Body (Create Location):**
+```json
+{
+    "latitude": "6.524400",
+    "longitude": "3.379200",
+    "state": "Lagos",
+    "local_government": "Ikeja",
+    "address": "Underbridge, Ikeja",
+    "report_source": "EYEWITNESS",
+    "incident_types": "ROBBERY"
+}
