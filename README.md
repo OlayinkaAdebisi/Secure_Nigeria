@@ -38,8 +38,7 @@ I chose **Django** for its robustness and security features—essential for a pl
 
 1.  **Clone the repo:**
     ```bash
-    git clone [https://github.com/your-username/secure-nigeria-api.git](https://github.com/your-username/secure-nigeria-api.git)
-    cd secure-nigeria-api
+    git clone https://github.com/OlayinkaAdebisi/Secure_Nigeria.git
     ```
 
 2.  **Install dependencies:**
