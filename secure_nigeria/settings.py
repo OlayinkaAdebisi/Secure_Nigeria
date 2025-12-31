@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import dj_database_url
 import os
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -153,11 +153,15 @@ REST_FRAMEWORK = {
     )
 }
 # Cloudinary Setup
+  # Make sure this is at the top
+
+# ...
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dkpykzeb2',             
-    'API_KEY': '299441593815492',  
-    'API_SECRET': 'c2qcPmssjBkG02uPiNXLSBny0K4',
-    }
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET'),
+}
 MEDIA_URL = '/media/'
 STORAGES = {
     "default": {
