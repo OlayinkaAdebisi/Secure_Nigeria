@@ -1,4 +1,4 @@
-# Secure Nigeria 🇳🇬
+# Secure Nigeria API
 
 **ALX BE Capstone Project** | Nigeria Security Awareness API
 
