@@ -24,13 +24,29 @@ This isn't just a database; it's a tool to empower citizens with the information
 
 ---
 
-## 💡 What Can You Do With It?
+## 💡 What Can You Do With It
 
-- 📍 **Report Incidents:** Witnessed something?  Log it immediately with specific location details (State, LGA, Address).
-- 📢 **Stay Informed:** View a "Feed" of security alerts happening around you, from robberies to accidents.
-- 🚓 **Find Help Fast:** Database of 802+ Emergency Stations (Police, Fire, Military, Hospitals) across all Nigerian states.
-- 🔔 **Get Notified:** Follow other users and get automatic notifications when they post updates.
-- ✅ **Trust but Verify:** Fight misinformation by verifying or disputing security reports.
+### 📍 Report Incidents Instantly
+See something happening? Log it immediately with full details like State, LGA, and exact address.
+
+### 📢 Stay Informed With Live Security Updates
+View a real time Feed of alerts around you including robberies, accidents, missing persons, fire outbreaks and more.
+
+### 🚑 Find Help Fast Using Smart Location Technology
+I built a **Haversine Coordinate Distance Calculator** into the system.  
+It takes your current GPS coordinates and **automatically finds and suggests the nearest emergency station to you**.  
+This means you do not need to search manually. The system calculates distance for you and shows the closest help option within seconds.
+
+### 🗂️ Nationwide Coverage (My Dataset)
+I manually extracted and compiled **a dataset of 802 police stations across every state in Nigeria** and stored it in JSON format.  
+This allows the location feature to work anywhere in the country.
+
+### 🔔 Notification System
+Follow other users and receive automatic alerts when they post incident updates.
+
+### 🛑 Fight Misinformation
+Verify or dispute reports to keep the platform accurate and trustworthy.
+
 
 ---
 
