@@ -2,7 +2,7 @@
 
 **ALX BE Capstone Project** | Nigeria Security Awareness API
 
-[![Python 100%](https://img.shields.io/badge/Python-100%25-blue? style=flat-square)](https://python.org)
+[![Python 100%](https://img.shields.io/badge/Python-100%25-blue?style=flat-square)](https://python.org)
 [![Django REST Framework](https://img.shields.io/badge/Django%20REST-Framework-darkgreen?style=flat-square)](https://www.django-rest-framework.org/)
 [![Live on Render](https://img.shields.io/badge/Live-Render-46E3B7?style=flat-square)](https://secure-nigeria.onrender.com)
 
