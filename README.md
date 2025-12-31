@@ -173,7 +173,65 @@ Authorization: Token <your_access_token>
 Obtain your token by logging in via the `/secure_nigeria/login/` endpoint.
 
 ---
+### 🗺️ Complete Endpoint List (Quick Reference)
 
+**Base URL:** https://secure-nigeria.onrender.com  
+**Prefix:** `/secure_nigeria/`  
+**Full Pattern:** `https://secure-nigeria.onrender.com/secure_nigeria/{endpoint}`
+
+---
+
+#### 🔐 Authentication & Users
+- POST `/secure_nigeria/signup/`
+- POST `/secure_nigeria/login/`
+- GET `/secure_nigeria/profile/`
+- PATCH `/secure_nigeria/profile/{id}/`
+- POST `/secure_nigeria/follow/{user_id}/`
+- POST `/secure_nigeria/unfollow/{user_id}/`
+
+---
+
+#### 📍 Location Reporting
+- POST `/secure_nigeria/location/`  
+  > ⚡ **Nearest Station Lookup:** When you report a new location, the system automatically runs the **Haversine Distance Calculator** using your coordinates and returns the **closest emergency station** to your reported location.  
+- GET `/secure_nigeria/location/`
+- GET `/secure_nigeria/location/{id}/`
+
+---
+
+#### 📢 Security Feed
+- POST `/secure_nigeria/feed/`
+- GET `/secure_nigeria/feed/`
+- GET `/secure_nigeria/feed/{id}/`
+- PATCH `/secure_nigeria/feed/{id}/`
+- POST `/secure_nigeria/feed/verify/{id}/`
+- POST `/secure_nigeria/feed/unverify/{id}/`
+
+---
+
+#### 💬 Comments on Feed Posts
+- POST `/secure_nigeria/comment/`
+- GET `/secure_nigeria/comment/?feed={feed_id}`
+
+---
+
+#### 🚓 Emergency Stations
+- GET `/secure_nigeria/stations/` — List all 802+ emergency stations (JSON)  
+- GET `/secure_nigeria/stations/{id}/` — Get details of a single station  
+
+> ⚡ **Note:** The nearest station feature is automatically triggered when creating a **location report**, so no separate endpoint is needed.
+
+---
+
+#### ⚠️ High-Risk Areas
+- POST `/secure_nigeria/risk/`
+- GET `/secure_nigeria/risk/`
+
+---
+
+#### 🔔 Notifications
+- GET `/secure_nigeria/notification/`
+---
 ## 🔐 **1. Authentication & User Accounts** (`/secure_nigeria/`)
 
 ### Register / Sign Up
