@@ -70,8 +70,9 @@ Here is exactly how to test the system in Postman.
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | **POST** | `/secure_nigeria/signup/` | Create a new account |
-| **POST** | `/secure_nigeria/signin/` | **Login (Get Token)** |
+| **POST** | `/secure_nigeria/login/` | **Login (Get Token)** |
 | **POST** | `/secure_nigeria/follow/<id>/` | Follow another user |
+| **POST** | `/secure_nigeria/unfollow/<id>/` | Unfollow another user |
 
 **📝 JSON Body for Sign Up:**
 ```json
