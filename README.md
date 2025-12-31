@@ -71,6 +71,7 @@ Here is exactly how to test the system in Postman.
 | :--- | :--- | :--- |
 | **POST** | `/secure_nigeria/signup/` | Create a new account |
 | **POST** | `/secure_nigeria/login/` | **Login (Get Token)** |
+| **POST** | `/secure_nigeria/profile/` | Get User profile |
 | **POST** | `/secure_nigeria/follow/<id>/` | Follow another user |
 | **POST** | `/secure_nigeria/unfollow/<id>/` | Unfollow another user |
 
