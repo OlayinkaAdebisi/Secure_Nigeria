@@ -1218,7 +1218,7 @@ I'm a passionate Django/Python developer committed to building technology soluti
 
 **Made with ❤️ for Nigeria's Security.**
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue? style=flat-square&logo=python)](https://python.org)
+[![Python 100%](https://img.shields.io/badge/Python-100%25-blue?style=flat-square)](https://python.org)
 [![Django](https://img.shields.io/badge/Django-REST-darkgreen?style=flat-square&logo=django)](https://www.djangoproject.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?style=flat-square&logo=postgresql)](https://www.postgresql.org/)
 
